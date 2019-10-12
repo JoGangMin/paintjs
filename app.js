@@ -1,19 +1,18 @@
 const canvas = document.querySelector("#jsCanvas");
 const ctx = canvas.getContext('2d'); 
 const color = document.getElementsByClassName('jsColor');
+const sizeRegulator = document.querySelector('#sizeRegulator');
 
 canvas.width = 700;
 canvas.height = 700;
-
+ctx.strokeStyle = "#2c2c2c";
+ctx.lineWidth = 15;
 let painting = false;
 
-ctx.strockStyle = '#2c2c2c';
-ctx.lineWidth = 2.5;
 
 
 function startPainting(){
-    painting = true;
-    
+    painting = true; 
 }
 
 function stopPaintting(){
@@ -21,7 +20,6 @@ function stopPaintting(){
 }
 
 function onMouseMove(){
- //그림그리기    
  const x = event.offsetX;
  const y = event.offsetY;
 
@@ -32,16 +30,22 @@ function onMouseMove(){
  else{
  ctx.lineTo(x,y);
  ctx.stroke();
- }
+}
 
 }
 
 function handleColor(event){
-    const color = event.target.style.backgroundColor;
-    console.log(color);
-    ctx.strockStyle = color;
+    const changeColor = event.target.style.backgroundColor;
+    ctx.strokeStyle = changeColor;
+    console.log(ctx.strokeStyle);
         }
  
+function brushSize(){
+    const Size = event.target.value;
+    ctx.lineWidth = Size;
+    console.log(event.target.value);
+}
+    
 
 if (canvas){
     canvas.addEventListener("mousemove",onMouseMove);
@@ -49,7 +53,12 @@ if (canvas){
     canvas.addEventListener("mouseup",stopPaintting);
     canvas.addEventListener("mouseleave",stopPaintting);
 }
+
+if(color){
 Array.from(color).forEach(color => { color.addEventListener("click",handleColor)
 });
+}
 
-console.log(ctx.strockStyle)
+if(sizeRegulator){
+sizeRegulator.addEventListener('change',brushSize)
+}
