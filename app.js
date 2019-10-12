@@ -1,40 +1,45 @@
 const canvas = document.querySelector("#jsCanvas");
 const ctx = canvas.getContext('2d'); 
 
+canvas.width = 700;
+canvas.height = 700;
+
 let painting = false;
 
-function stopPainting(){
+ctx.strockStyle = "#2c2c2c";
+ctx.lineWidth = 2.5;
+
+function startPainting(){
+    painting = true;
+    
+}
+
+function stopPaintting(){
     painting = false;
 }
 
-function onMouseMove(event){
-    const x = event.offsetX;
-    const y = event.offsetY;
+function onMouseMove(){
+ //그림그리기   
+ const x = event.offsetX;
+ const y = event.offsetY;
+
+ if(!painting){
+ ctx.beginPath();
+ ctx.moveTo(x,y);
+ }
+ else{
+ ctx.lineTo(x,y);
+ ctx.stroke();
+ }
+
 }
 
-function onMouseDown(event){
-    painting = true;
-}
-function onMouseUp(){
-     stopPainting();
-}
-function onMouseLeave(){
-     stopPainting();
-}
-
-if(canvas){
+if (canvas){
     canvas.addEventListener("mousemove",onMouseMove);
-    canvas.addEventListener("mousedown",onMousDown);
-    canvas.addEventListener("mouseup",onMouseUp);
-    canvas.addEventListener("mouseleave",onMouseLeave);
+    canvas.addEventListener("mousedown",startPainting);
+    canvas.addEventListener("mouseup",stopPaintting);
+    canvas.addEventListener("mouseleave",stopPaintting);
 }
+else{
 
-// function Test_coordnets(){
-//     console.log()//현제 좌표?
-// }
-
-// function mousOnCanvas(){
-//     canvas.addEventListener("",)
-// }
-
-// console.log(ctx);
+}
